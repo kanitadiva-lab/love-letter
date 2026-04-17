@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For You <3</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    overflow: hidden;
+    background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+}
+
+/* START SCREEN */
+#start {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #ff4d6d, #ff7eb3);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    text-align: center;
+}
+
+#start h1 {
+    font-size: 22px;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% {transform: scale(1);}
+    50% {transform: scale(1.1);}
+    100% {transform: scale(1);}
+}
+
+button {
+    padding: 10px 18px;
+    border: none;
+    border-radius: 20px;
+    background: white;
+    color: #ff2d55;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+/* MAIN */
+#main {
+    display: none;
+    padding: 20px;
+}
+
+.card {
+    max-width: 500px;
+    margin: auto;
+    background: rgba(255,255,255,0.95);
+    padding: 20px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 0 25px rgba(0,0,0,0.2);
+}
+
+img {
+    width: 100%;
+    border-radius: 15px;
+}
+
+h1 {
+    font-family: 'Dancing Script', cursive;
+    color: #ff2d55;
+    font-size: 40px;
+}
+
+#text {
+    white-space: pre-line;
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+/* PAGE 2 */
+#page2 {
+    display: none;
+    text-align: center;
+    padding: 60px;
+}
+
+/* HEARTS */
+.heart {
+    position: fixed;
+    top: -10px;
+    color: #ff2d55;
+    animation: fall 5s linear infinite;
+}
+
+@keyframes fall {
+    to {transform: translateY(100vh);}
+}
+
+/* CONFETTI */
+.confetti {
+    position: fixed;
+    width: 8px;
+    height: 8px;
+    top: 0;
+    animation: drop 3s linear infinite;
+}
+
+@keyframes drop {
+    to {transform: translateY(100vh) rotate(360deg);}
+}
+
+/* SLIDESHOW */
+.slide {
+    display: none;
+    width: 100%;
+    border-radius: 15px;
+}
+
+.show {
+    display: block;
+}
+</style>
+</head>
+
+<body>
+
+<!-- START -->
+<div id="start">
+    <h1>💌 Hey You... I Have Something Very Special <3</h1>
+    <button onclick="start()">Open It 🎁</button>
+</div>
+
+<!-- MAIN -->
+<div id="main">
+
+<div class="card">
+
+    <!-- SLIDESHOW -->
+    <img class="slide show" src="ghaisaan.jpeg">
+    <img class="slide" src="ghaisan.jpeg">
+
+    <h1>Ghaisan Aysel <3 (≧◡≦)</h1>
+
+    <p id="text"></p>
+
+    <button onclick="playMusic()">Play Song 🎶</button>
+    <button onclick="nextPage()">Next ➜</button>
+
+</div>
+
+</div>
+
+<!-- PAGE 2 -->
+<div id="page2">
+    <h1>Will you stay with me? <3</h1>
+    <p>(｡>﹏<｡) I hope you always choose us...</p>
+</div>
+
+<!-- MUSIC -->
+<audio id="music" loop>
+    <source src="daniel caesar.mp3" type="audio/mpeg">
+</audio>
+
+<!-- CLICK SOUND -->
+<audio id="click">
+    <source src="click.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+
+const message = `
+Dear Ghaisan Aysel <3
+
+I don’t even know how to explain this feeling...
+
+But you are my safe place.
+
+You are the reason my days feel lighter.
+
+Every smile of yours stays in my mind longer than you think.
+
+Thank you for being patient with me.
+
+Thank you for staying.
+
+I will always choose you, even in silence, even in distance.
+
+(｡>﹏<｡) I really mean it
+`;
+
+let i = 0;
+
+function typeWriter(){
+    if(i < message.length){
+        document.getElementById("text").innerHTML += message.charAt(i);
+        i++;
+        setTimeout(typeWriter, 25);
+    }
+}
+
+/* START */
+function start(){
+    document.getElementById("click").play();
+    document.getElementById("start").style.display = "none";
+    document.getElementById("main").style.display = "block";
+
+    typeWriter();
+    hearts();
+    confetti();
+    slideShow();
+}
+
+/* MUSIC */
+function playMusic(){
+    document.getElementById("music").play();
+}
+
+/* HEARTS */
+function hearts(){
+    setInterval(() => {
+        let h = document.createElement("div");
+        h.classList.add("heart");
+        h.innerHTML = "<3";
+        h.style.left = Math.random()*100 + "vw";
+        document.body.appendChild(h);
+        setTimeout(() => h.remove(), 5000);
+    }, 200);
+}
+
+/* CONFETTI */
+function confetti(){
+    setInterval(() => {
+        let c = document.createElement("div");
+        c.classList.add("confetti");
+        c.style.left = Math.random()*100 + "vw";
+        c.style.background = ["#ff2d55","#ffcc00","#00c3ff","#9b59b6"][Math.floor(Math.random()*4)];
+        document.body.appendChild(c);
+        setTimeout(() => c.remove(), 3000);
+    }, 100);
+}
+
+/* SLIDESHOW */
+function slideShow(){
+    let slides = document.getElementsByClassName("slide");
+    let index = 0;
+
+    setInterval(() => {
+        for(let i=0;i<slides.length;i++){
+            slides[i].classList.remove("show");
+        }
+        index = (index + 1) % slides.length;
+        slides[index].classList.add("show");
+    }, 2500);
+}
+
+/* PAGE 2 */
+function nextPage(){
+    document.getElementById("main").style.display = "none";
+    document.getElementById("page2").style.display = "block";
+}
+
+</script>
+
+</body>
+</html>
